@@ -47,6 +47,9 @@ MonoBehaviour:
   EggCounter: 0
   changePlatform: 0
   OneFloor: {x: 0, y: 0, z: 0}
+  currentFloor: 0
+  StartLoadLevelTime: 0
+  FirstTimeWin: 1
 --- !u!1 &7486142527983040430
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +64,8 @@ GameObject:
   - component: {fileID: 7486142527983040426}
   - component: {fileID: 7486142527983040425}
   - component: {fileID: 7486142527983040424}
+  - component: {fileID: 4867425382694491642}
+  - component: {fileID: 896915906183389896}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -149,6 +154,9 @@ MonoBehaviour:
   EggCounter: 0
   changePlatform: 0
   OneFloor: {x: 0, y: 0, z: 0}
+  currentFloor: 0
+  StartLoadLevelTime: 0
+  FirstTimeWin: 1
 --- !u!114 &7486142527983040425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +186,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AlreadySeen: 0
+  floor: 0
+--- !u!114 &4867425382694491642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486142527983040430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c265f936bedea1a4e89505a45224b3b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matBlur: {fileID: 0}
+--- !u!114 &896915906183389896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486142527983040430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a71c23937512374cbea3a5ffc7cd25b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EggCounter: 0
+  changePlatform: 0
+  OneFloor: {x: 0, y: 0, z: 0}
+  currentFloor: 0
+  StartLoadLevelTime: 0
+  FirstTimeWin: 1
 --- !u!1001 &7486142528153163189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -249,14 +289,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 723926960, guid: 60270cf52a5e94998a5a335989159738, type: 3}
-      propertyPath: overridePointerCamera
-      value: 
-      objectReference: {fileID: 7486142527983040428}
-    - target: {fileID: 723926960, guid: 60270cf52a5e94998a5a335989159738, type: 3}
-      propertyPath: drawDebugRays
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2301146, guid: 60270cf52a5e94998a5a335989159738, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -301,6 +333,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[10]
       value: 
       objectReference: {fileID: 2100000, guid: 4cb1460f617514a888f47071314ccdae, type: 2}
+    - target: {fileID: 723926960, guid: 60270cf52a5e94998a5a335989159738, type: 3}
+      propertyPath: overridePointerCamera
+      value: 
+      objectReference: {fileID: 7486142527983040428}
+    - target: {fileID: 723926960, guid: 60270cf52a5e94998a5a335989159738, type: 3}
+      propertyPath: drawDebugRays
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60270cf52a5e94998a5a335989159738, type: 3}
 --- !u!4 &7486142528153243209 stripped

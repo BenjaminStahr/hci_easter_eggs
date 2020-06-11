@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class CameraController : MonoBehaviour
+public class CameraControllerOtherScene : MonoBehaviour
 {
     GameObject SearchKnob;
     public int EggCounter = 0;
@@ -66,24 +66,27 @@ public class CameraController : MonoBehaviour
         {
             //Debug.Log("Value : "+(255 - (60 - (AngleEasterEgg / 3)) * 4.25));
             //Debug.Log("Angle : "+AngleEasterEgg);
-            SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, (byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
+            //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, (byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
+            this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", (1/(61-AngleEasterEgg)) * 0.016f);
+            Debug.Log(AngleEasterEgg);
         }
         else
         {
-            SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
+            //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
+            this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", 0.016f);
         }
-        
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100, ~0))
         {
-            if (hit.transform.gameObject.tag == "EasterEgg" 
+            if (hit.transform.gameObject.tag == "EasterEgg"
                 && hit.transform.gameObject.GetComponent<EggScript>().AlreadySeen == false)
             {
                 hit.transform.GetComponent<MeshRenderer>().enabled = true;
                 hit.transform.GetComponent<EggScript>().AlreadySeen = true;
                 EggCounter++;
                 Destroy(hit.transform.gameObject, 5);
-                if(EggCounter % 3 == 0 && EggCounter != 9)
+                if (EggCounter % 3 == 0 && EggCounter != 9)
                 {
                     changePlatform = true;
                     if (currentFloor == FloorNumber.first)
@@ -95,7 +98,7 @@ public class CameraController : MonoBehaviour
                         currentFloor = FloorNumber.third;
                     }
                 }
-                
+
             }
         }
         if (changePlatform)

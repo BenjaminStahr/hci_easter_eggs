@@ -9,6 +9,7 @@ public class LoadGameScript : MonoBehaviour
     public bool Holding = false;
     public bool TimeSetted = false;
     public double time = 0;
+    public int SceneNumber = 0;
     // Use this for initialization
 
     // Update is called once per frame
@@ -22,12 +23,13 @@ public class LoadGameScript : MonoBehaviour
         }
         if (Time.time - time > 2 && TimeSetted)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(SceneNumber);
         }
     }
-    public void SetHolding()
+    public void SetHolding(int SceneNum)
     {
         Holding = true;
+        SceneNumber = SceneNum;
     }
     public void UnsetHolding()
     {
