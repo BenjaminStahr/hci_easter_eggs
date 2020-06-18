@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class CameraControllerOtherScene : MonoBehaviour
 {
     GameObject SearchKnob;
+    GameObject Arrow;
     public int EggCounter = 0;
     public bool changePlatform = false;
     public Vector3 OneFloor = new Vector3(0, 0, 0);
@@ -19,6 +20,7 @@ public class CameraControllerOtherScene : MonoBehaviour
     void Start()
     {
         SearchKnob = GameObject.FindGameObjectWithTag("SearchKnob");
+        Arrow = GameObject.FindGameObjectWithTag("Arrow");
     }
 
     // Update is called once per frame
@@ -64,16 +66,46 @@ public class CameraControllerOtherScene : MonoBehaviour
         float AngleEasterEgg = Vector3.Angle(EasterEggVectorFinal, transform.TransformDirection(Vector3.forward));
         if (AngleEasterEgg < 60)
         {
+            //Vector3 ForwardToEgg = EasterEggVectorFinal - transform.TransformDirection(Vector3.forward);
+            //float ArrowAngle = Vector3.SignedAngle(new Vector3(ForwardToEgg.x, ForwardToEgg.y, 0), new Vector3(0, -1, 0), Vector3.forward);
+            //Arrow.GetComponent<RectTransform>().transform.setR;
+            //Debug.Log("Angle : "+ArrowAngle);
+            //Vector3 FinalWithoutZ = new Vector3(EasterEggVectorFinal.x, EasterEggVectorFinal.y, 0);
+            //Vector3 ForwardWithoutZ = new Vector3(transform.TransformDirection(Vector3.forward).x,
+            //  transform.TransformDirection(Vector3.forward).y, 0);
+            Vector3 ForwardToEasterEgg = -transform.TransformDirection(Vector3.forward)  + Vector3.Normalize(EasterEggVectorFinal);
+
+            //this works
+            //float RotationAngle = (Vector3.Angle(new Vector3(0,1,0), ForwardToEasterEgg));
+            //float RotationAngle = ((Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg)))+90;
+            float RotationAngle = 0;
+            Vector3 CrossP = Vector3.Cross(transform.TransformDirection(Vector3.forward), EasterEggVectorFinal);
+            float DotP = Vector3.Dot(CrossP, new Vector3(0,1,0));
+            if (DotP > 0)
+            {
+                // here is right so minus
+                RotationAngle = (-(Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg))) + 90;
+            }
+            else
+            {
+                RotationAngle = ((Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg))) + 90;
+            }
+
+            Debug.Log(RotationAngle);
+            Vector3 ArrowRotation = Arrow.GetComponent<RectTransform>().eulerAngles;
+            ArrowRotation.z = RotationAngle;
+            Arrow.GetComponent<RectTransform>().eulerAngles = ArrowRotation;
+
             //Debug.Log("Value : "+(255 - (60 - (AngleEasterEgg / 3)) * 4.25));
             //Debug.Log("Angle : "+AngleEasterEgg);
             //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, (byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
-            this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", (1/(61-AngleEasterEgg)) * 0.016f);
-            Debug.Log(AngleEasterEgg);
+            //this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", (1/(61-AngleEasterEgg)) * 0.016f);
+            //Debug.Log(AngleEasterEgg);
         }
         else
         {
             //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
-            this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", 0.016f);
+            //this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", 0.016f);
         }
 
         RaycastHit hit;
@@ -98,7 +130,6 @@ public class CameraControllerOtherScene : MonoBehaviour
                         currentFloor = FloorNumber.third;
                     }
                 }
-
             }
         }
         if (changePlatform)
