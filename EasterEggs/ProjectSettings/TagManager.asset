@@ -10,6 +10,7 @@ TagManager:
   - FirstEgg
   - Time
   - Arrow
+  - Rotation
   layers:
   - Default
   - TransparentFX

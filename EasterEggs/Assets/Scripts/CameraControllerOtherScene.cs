@@ -29,6 +29,7 @@ public class CameraControllerOtherScene : MonoBehaviour
         if (EggCounter == 9)
         {
             GameObject.FindGameObjectWithTag("Time").GetComponent<ShowTimeScript>().WinGame = true;
+            GameObject.FindGameObjectWithTag("Rotation").GetComponent<ShowRotationScript>().WinGame = true;
             if (FirstTimeWin)
             {
                 FirstTimeWin = false;
@@ -42,10 +43,11 @@ public class CameraControllerOtherScene : MonoBehaviour
 
         GameObject[] EasterEggs = GameObject.FindGameObjectsWithTag("EasterEgg");
         Vector3 EasterEggVector = EasterEggs[0].transform.position - this.transform.position;
-        GameObject EasterEgg = EasterEggs[0];
+        GameObject EasterEgg = null;
         for (int i = 0; i < EasterEggs.Length; i++)
         {
-            if (EasterEggs[i].GetComponent<EggScript>().floor == currentFloor)
+            if (EasterEggs[i].GetComponent<EggScript>().floor == currentFloor &&
+                !EasterEggs[i].GetComponent<EggScript>().AlreadySeen)
             {
                 EasterEgg = EasterEggs[i];
                 break;
@@ -62,84 +64,87 @@ public class CameraControllerOtherScene : MonoBehaviour
             }
 
         }
-        Vector3 EasterEggVectorFinal = EasterEgg.transform.position - this.transform.position;
-        float AngleEasterEgg = Vector3.Angle(EasterEggVectorFinal, transform.TransformDirection(Vector3.forward));
-        if (AngleEasterEgg < 60)
+        if (EasterEgg != null)
         {
-            //Vector3 ForwardToEgg = EasterEggVectorFinal - transform.TransformDirection(Vector3.forward);
-            //float ArrowAngle = Vector3.SignedAngle(new Vector3(ForwardToEgg.x, ForwardToEgg.y, 0), new Vector3(0, -1, 0), Vector3.forward);
-            //Arrow.GetComponent<RectTransform>().transform.setR;
-            //Debug.Log("Angle : "+ArrowAngle);
-            //Vector3 FinalWithoutZ = new Vector3(EasterEggVectorFinal.x, EasterEggVectorFinal.y, 0);
-            //Vector3 ForwardWithoutZ = new Vector3(transform.TransformDirection(Vector3.forward).x,
-            //  transform.TransformDirection(Vector3.forward).y, 0);
-            Vector3 ForwardToEasterEgg = -transform.TransformDirection(Vector3.forward)  + Vector3.Normalize(EasterEggVectorFinal);
-
-            //this works
-            //float RotationAngle = (Vector3.Angle(new Vector3(0,1,0), ForwardToEasterEgg));
-            //float RotationAngle = ((Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg)))+90;
-            float RotationAngle = 0;
-            Vector3 CrossP = Vector3.Cross(transform.TransformDirection(Vector3.forward), EasterEggVectorFinal);
-            float DotP = Vector3.Dot(CrossP, new Vector3(0,1,0));
-            if (DotP > 0)
+            Vector3 EasterEggVectorFinal = EasterEgg.transform.position - this.transform.position;
+            float AngleEasterEgg = Vector3.Angle(EasterEggVectorFinal, transform.TransformDirection(Vector3.forward));
+            if (AngleEasterEgg < 60)
             {
-                // here is right so minus
-                RotationAngle = (-(Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg))) + 90;
+                //Vector3 ForwardToEgg = EasterEggVectorFinal - transform.TransformDirection(Vector3.forward);
+                //float ArrowAngle = Vector3.SignedAngle(new Vector3(ForwardToEgg.x, ForwardToEgg.y, 0), new Vector3(0, -1, 0), Vector3.forward);
+                //Arrow.GetComponent<RectTransform>().transform.setR;
+                //Debug.Log("Angle : "+ArrowAngle);
+                //Vector3 FinalWithoutZ = new Vector3(EasterEggVectorFinal.x, EasterEggVectorFinal.y, 0);
+                //Vector3 ForwardWithoutZ = new Vector3(transform.TransformDirection(Vector3.forward).x,
+                //  transform.TransformDirection(Vector3.forward).y, 0);
+                Vector3 ForwardToEasterEgg = -transform.TransformDirection(Vector3.forward) + Vector3.Normalize(EasterEggVectorFinal);
+
+                //this works
+                //float RotationAngle = (Vector3.Angle(new Vector3(0,1,0), ForwardToEasterEgg));
+                //float RotationAngle = ((Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg)))+90;
+                float RotationAngle = 0;
+                Vector3 CrossP = Vector3.Cross(transform.TransformDirection(Vector3.forward), EasterEggVectorFinal);
+                float DotP = Vector3.Dot(CrossP, new Vector3(0, 1, 0));
+                if (DotP > 0)
+                {
+                    // here is right so minus
+                    RotationAngle = (-(Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg))) + 90;
+                }
+                else
+                {
+                    RotationAngle = ((Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg))) + 90;
+                }
+
+                //Debug.Log(RotationAngle);
+                Vector3 ArrowRotation = Arrow.GetComponent<RectTransform>().eulerAngles;
+                ArrowRotation.z = RotationAngle;
+                Arrow.GetComponent<RectTransform>().eulerAngles = ArrowRotation;
+
+                //Debug.Log("Value : "+(255 - (60 - (AngleEasterEgg / 3)) * 4.25));
+                //Debug.Log("Angle : "+AngleEasterEgg);
+                //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, (byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
+                //this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", (1/(61-AngleEasterEgg)) * 0.016f);
+                //Debug.Log(AngleEasterEgg);
             }
             else
             {
-                RotationAngle = ((Vector3.Angle(new Vector3(0, 1, 0), ForwardToEasterEgg))) + 90;
+                //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
+                //this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", 0.016f);
             }
 
-            Debug.Log(RotationAngle);
-            Vector3 ArrowRotation = Arrow.GetComponent<RectTransform>().eulerAngles;
-            ArrowRotation.z = RotationAngle;
-            Arrow.GetComponent<RectTransform>().eulerAngles = ArrowRotation;
-
-            //Debug.Log("Value : "+(255 - (60 - (AngleEasterEgg / 3)) * 4.25));
-            //Debug.Log("Angle : "+AngleEasterEgg);
-            //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, (byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
-            //this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", (1/(61-AngleEasterEgg)) * 0.016f);
-            //Debug.Log(AngleEasterEgg);
-        }
-        else
-        {
-            //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
-            //this.gameObject.GetComponent<CamShaderInterfaceScript>().matBlur.SetFloat("_StandardDeviation", 0.016f);
-        }
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100, ~0))
-        {
-            if (hit.transform.gameObject.tag == "EasterEgg"
-                && hit.transform.gameObject.GetComponent<EggScript>().AlreadySeen == false)
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100, ~0))
             {
-                hit.transform.GetComponent<MeshRenderer>().enabled = true;
-                hit.transform.GetComponent<EggScript>().AlreadySeen = true;
-                EggCounter++;
-                Destroy(hit.transform.gameObject, 5);
-                if (EggCounter % 3 == 0 && EggCounter != 9)
+                if (hit.transform.gameObject.tag == "EasterEgg"
+                    && hit.transform.gameObject.GetComponent<EggScript>().AlreadySeen == false)
                 {
-                    changePlatform = true;
-                    if (currentFloor == FloorNumber.first)
+                    hit.transform.GetComponent<MeshRenderer>().enabled = true;
+                    hit.transform.GetComponent<EggScript>().AlreadySeen = true;
+                    EggCounter++;
+                    Destroy(hit.transform.gameObject, 5);
+                    if (EggCounter % 3 == 0 && EggCounter != 9)
                     {
-                        currentFloor = FloorNumber.second;
-                    }
-                    else if (currentFloor == FloorNumber.second)
-                    {
-                        currentFloor = FloorNumber.third;
+                        changePlatform = true;
+                        if (currentFloor == FloorNumber.first)
+                        {
+                            currentFloor = FloorNumber.second;
+                        }
+                        else if (currentFloor == FloorNumber.second)
+                        {
+                            currentFloor = FloorNumber.third;
+                        }
                     }
                 }
             }
-        }
-        if (changePlatform)
-        {
-            this.gameObject.transform.parent.transform.Translate(Vector3.up * 10 * Time.deltaTime);
-            OneFloor += Vector3.up * 10 * Time.deltaTime;
-            if (OneFloor.magnitude > 9)
+            if (changePlatform)
             {
-                OneFloor = new Vector3(0, 0, 0);
-                changePlatform = false;
+                this.gameObject.transform.parent.transform.Translate(Vector3.up * 10 * Time.deltaTime);
+                OneFloor += Vector3.up * 10 * Time.deltaTime;
+                if (OneFloor.magnitude > 9)
+                {
+                    OneFloor = new Vector3(0, 0, 0);
+                    changePlatform = false;
+                }
             }
         }
     }
