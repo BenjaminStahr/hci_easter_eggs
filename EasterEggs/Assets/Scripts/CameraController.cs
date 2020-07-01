@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
                 FirstTimeWin = false;
                 StartLoadLevelTime = Time.time;
             }
-            if (Time.time - StartLoadLevelTime > 10)
+            if (Time.time - StartLoadLevelTime > 20)
             {
                 SceneManager.LoadScene(0);
             }
@@ -70,7 +70,23 @@ public class CameraController : MonoBehaviour
             {
                 //Debug.Log("Value : "+(255 - (60 - (AngleEasterEgg / 3)) * 4.25));
                 //Debug.Log("Angle : "+AngleEasterEgg);
-                SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, (byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
+                if (AngleEasterEgg > 40)
+                {
+                    //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255,
+                    //(byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
+                    SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255,
+                    (byte)(255 - (20 - (AngleEasterEgg - 40)) * 12.75), (byte)(255 - (20 - (AngleEasterEgg - 40)) * 12.75), 255);
+                }
+                if (AngleEasterEgg <= 40 && AngleEasterEgg > 20)
+                {
+                    SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(
+                        255, 255, (byte)(255 - (20 - (AngleEasterEgg - 20)) * 12.75), 255);
+                }
+                if (AngleEasterEgg <= 20)
+                {
+                    SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(
+                        (byte)(255 - (20 - AngleEasterEgg) * 12.75), 255, (byte)(255 - (20 - AngleEasterEgg) * 12.75), 255);
+                }  
             }
             else
             {

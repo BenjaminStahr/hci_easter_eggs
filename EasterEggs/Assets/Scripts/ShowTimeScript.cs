@@ -31,7 +31,7 @@ public class ShowTimeScript : MonoBehaviour
                 EndTime = (int)(Time.time - StartTime);
             }
             TextMeshProUGUI textmeshProUGUI = gameObject.GetComponent<TextMeshProUGUI>();
-            textmeshProUGUI.SetText("Win! Time needed: "+ "{0}" + " Restart in 10 sec", EndTime);
+            textmeshProUGUI.SetText("Win! Time needed: "+ "{0}" + "\n"+" Restart in 20 sec", EndTime);
         }
            
     }

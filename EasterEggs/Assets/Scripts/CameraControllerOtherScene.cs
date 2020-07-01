@@ -35,7 +35,7 @@ public class CameraControllerOtherScene : MonoBehaviour
                 FirstTimeWin = false;
                 StartLoadLevelTime = Time.time;
             }
-            if (Time.time - StartLoadLevelTime > 10)
+            if (Time.time - StartLoadLevelTime > 20)
             {
                 SceneManager.LoadScene(0);
             }

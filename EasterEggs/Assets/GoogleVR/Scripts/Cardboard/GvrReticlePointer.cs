@@ -27,21 +27,21 @@ public class GvrReticlePointer : GvrBasePointer
     /// <summary>
     /// The constants below are expsed for testing. Minimum inner angle of the reticle (in degrees).
     /// </summary>
-    public const float RETICLE_MIN_INNER_ANGLE = 0.0f;
+    public float RETICLE_MIN_INNER_ANGLE = 0.0f;
 
     /// <summary>Minimum outer angle of the reticle (in degrees).</summary>
-    public const float RETICLE_MIN_OUTER_ANGLE = 0.5f;
+    public const float RETICLE_MIN_OUTER_ANGLE = 2f;
 
     /// <summary>
     /// Angle at which to expand the reticle when intersecting with an object (in degrees).
     /// </summary>
-    public const float RETICLE_GROWTH_ANGLE = 1.5f;
+    public float RETICLE_GROWTH_ANGLE = 1.5f;
 
     /// <summary>Minimum distance of the reticle (in meters).</summary>
-    public const float RETICLE_DISTANCE_MIN = 0.45f;
+    public float RETICLE_DISTANCE_MIN = 0.45f;
 
     /// <summary>Maximum distance of the reticle (in meters).</summary>
-    public float maxReticleDistance = 20.0f;
+    public float maxReticleDistance = 10.0f;
 
     /// <summary>Number of segments making the reticle circle.</summary>
     public int reticleSegments = 20;
@@ -65,17 +65,17 @@ public class GvrReticlePointer : GvrBasePointer
     /// <summary>Gets the current inner angle of the reticle (in degrees).</summary>
     /// <remarks>Exposed for testing.</remarks>
     /// <value>The current inner angle of the reticle (in degrees).</value>
-    public float ReticleInnerAngle { get; private set; }
+    public float ReticleInnerAngle { get; set; }
 
     /// <summary>Gets the current outer angle of the reticle (in degrees).</summary>
     /// <remarks>Exposed for testing.</remarks>
     /// <value>The current outer angle of the reticle (in degrees).</value>
-    public float ReticleOuterAngle { get; private set; }
+    public float ReticleOuterAngle { get; set; }
 
     /// <summary>Gets the current distance of the reticle (in meters).</summary>
     /// <remarks>Getter exposed for testing.</remarks>
     /// <value>The current distance of the reticle (in meters).</value>
-    public float ReticleDistanceInMeters { get; private set; }
+    public float ReticleDistanceInMeters { get; set; }
 
     /// <summary>
     /// Gets the current inner and outer diameters of the reticle, before distance multiplication.
@@ -84,11 +84,11 @@ public class GvrReticlePointer : GvrBasePointer
     /// <value>
     /// The current inner and outer diameters of the reticle, before distance multiplication.
     /// </value>
-    public float ReticleInnerDiameter { get; private set; }
+    public float ReticleInnerDiameter { get; set; }
 
     /// <summary>Gets the current outer diameter of the reticle (in meters).</summary>
     /// <value>The current outer diameter of the reticle (in meters).</value>
-    public float ReticleOuterDiameter { get; private set; }
+    public float ReticleOuterDiameter { get; set; }
 
     /// <inheritdoc/>
     public override float MaxPointerDistance
