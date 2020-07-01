@@ -121,7 +121,7 @@ public class CameraControllerOtherScene : MonoBehaviour
                     hit.transform.GetComponent<MeshRenderer>().enabled = true;
                     hit.transform.GetComponent<EggScript>().AlreadySeen = true;
                     EggCounter++;
-                    Destroy(hit.transform.gameObject, 5);
+                    Destroy(hit.transform.gameObject, 1);
                     if (EggCounter % 3 == 0 && EggCounter != 9)
                     {
                         changePlatform = true;

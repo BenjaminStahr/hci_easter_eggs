@@ -56,7 +56,8 @@ public class CameraController : MonoBehaviour
             Vector3 EasterEggVectorTemp = EasterEggs[i].transform.position - this.transform.position;
             float AngleEasterEggTemp = Vector3.Angle(EasterEggVectorTemp, transform.TransformDirection(Vector3.forward));
             float AngleEasterEggBest = Vector3.Angle(EasterEggVector, transform.TransformDirection(Vector3.forward));
-            if (AngleEasterEggTemp < AngleEasterEggBest && EasterEggs[i].GetComponent<EggScript>().floor == currentFloor)
+            if (AngleEasterEggTemp < AngleEasterEggBest && EasterEggs[i].GetComponent<EggScript>().floor == currentFloor
+                && !EasterEggs[i].GetComponent<EggScript>().AlreadySeen)
             {
                 EasterEgg = EasterEggs[i];
             }
@@ -102,7 +103,7 @@ public class CameraController : MonoBehaviour
                     hit.transform.GetComponent<MeshRenderer>().enabled = true;
                     hit.transform.GetComponent<EggScript>().AlreadySeen = true;
                     EggCounter++;
-                    Destroy(hit.transform.gameObject, 5);
+                    Destroy(hit.transform.gameObject, 1);
                     if (EggCounter % 3 == 0 && EggCounter != 9)
                     {
                         changePlatform = true;
@@ -128,6 +129,10 @@ public class CameraController : MonoBehaviour
                     changePlatform = false;
                 }
             }
+        }
+        else
+        {
+            SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
         }
     }
 }
