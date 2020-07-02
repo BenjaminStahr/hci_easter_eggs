@@ -76,22 +76,22 @@ public class CameraController : MonoBehaviour
                     //SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255,
                     //(byte)(255 - (60 - AngleEasterEgg) * 4.25), (byte)(255 - (60 - AngleEasterEgg) * 4.25), 255);
                     SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255,
-                    (byte)(255 - (20 - (AngleEasterEgg - 40)) * 12.75), (byte)(255 - (20 - (AngleEasterEgg - 40)) * 12.75), 255);
+                    (byte)((20 - (AngleEasterEgg - 40)) * 6.375f), 0, 255);
                 }
                 if (AngleEasterEgg <= 40 && AngleEasterEgg > 20)
                 {
                     SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(
-                        255, 255, (byte)(255 - (20 - (AngleEasterEgg - 20)) * 12.75), 255);
+                        255, (byte)(((20 - (AngleEasterEgg - 20))+127) * 6.375f), 0, 255);
                 }
                 if (AngleEasterEgg <= 20)
                 {
                     SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(
-                        (byte)(255 - (20 - AngleEasterEgg) * 12.75), 255, (byte)(255 - (20 - AngleEasterEgg) * 12.75), 255);
+                        (byte)(255 - (20 - AngleEasterEgg) * 12.75), 255, 0, 255);
                 }  
             }
             else
             {
-                SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
+                SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 0, 0, 255);
             }
 
             RaycastHit hit;
@@ -132,7 +132,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 255, 255, 255);
+            SearchKnob.GetComponent<GvrReticlePointer>().MaterialComp.color = new Color32(255, 0, 0, 255);
         }
     }
 }
