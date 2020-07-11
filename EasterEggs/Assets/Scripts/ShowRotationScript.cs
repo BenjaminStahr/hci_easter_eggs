@@ -7,7 +7,7 @@ using TMPro;
 public class ShowRotationScript : MonoBehaviour
 {
     [SerializeField] UnityEngine.XR.XRNode m_VRNode = UnityEngine.XR.XRNode.Head;
-    float TotalRotation = 0;
+    public float TotalRotation = 0;
     public bool WinGame = false;
     GameObject Camera;
     Vector3 LastForward = new Vector3(0,0,0);
@@ -33,8 +33,8 @@ public class ShowRotationScript : MonoBehaviour
 
         if (WinGame)
         {
-            TextMeshProUGUI TextmeshProUGUI = gameObject.GetComponent<TextMeshProUGUI>();
-            TextmeshProUGUI.SetText(((int)TotalRotation).ToString());
+            //TextMeshProUGUI TextmeshProUGUI = gameObject.GetComponent<TextMeshProUGUI>();
+            //TextmeshProUGUI.SetText(((int)TotalRotation).ToString());
         }
         else
         {

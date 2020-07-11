@@ -16,11 +16,16 @@ public class CameraControllerOtherScene : MonoBehaviour
     // for loading new level
     public double StartLoadLevelTime = 0;
     public bool FirstTimeWin = true;
+    public Vector3 SaveVectorToEgg = new Vector3(0, 0, 0);
+    public float SaveRotationToEgg = 0;
+    public float SaveTimeToEgg = 0;
 
     void Start()
     {
         SearchKnob = GameObject.FindGameObjectWithTag("SearchKnob");
         Arrow = GameObject.FindGameObjectWithTag("Arrow");
+        GetComponent<SaveGameScript>().SaveGame("Starte Level 2");
+        SaveVectorToEgg = transform.TransformDirection(Vector3.forward);
     }
 
     // Update is called once per frame
@@ -58,7 +63,8 @@ public class CameraControllerOtherScene : MonoBehaviour
             Vector3 EasterEggVectorTemp = EasterEggs[i].transform.position - this.transform.position;
             float AngleEasterEggTemp = Vector3.Angle(EasterEggVectorTemp, transform.TransformDirection(Vector3.forward));
             float AngleEasterEggBest = Vector3.Angle(EasterEggVector, transform.TransformDirection(Vector3.forward));
-            if (AngleEasterEggTemp < AngleEasterEggBest && EasterEggs[i].GetComponent<EggScript>().floor == currentFloor)
+            if (AngleEasterEggTemp < AngleEasterEggBest && EasterEggs[i].GetComponent<EggScript>().floor == currentFloor
+                && !EasterEggs[i].GetComponent<EggScript>().AlreadySeen)
             {
                 EasterEgg = EasterEggs[i];
             }
@@ -121,6 +127,21 @@ public class CameraControllerOtherScene : MonoBehaviour
                     hit.transform.GetComponent<MeshRenderer>().enabled = true;
                     hit.transform.GetComponent<EggScript>().AlreadySeen = true;
                     EggCounter++;
+                    GetComponent<SaveGameScript>().SaveGame("Ei gefunden: " + EggCounter);
+                    float timeSinceLastEgg = (Time.time -
+                        GameObject.FindGameObjectWithTag("Time").GetComponent<ShowTimeScript>().StartTime - SaveTimeToEgg);
+                    GetComponent<SaveGameScript>().SaveGame("Zeit: " + timeSinceLastEgg);
+                    SaveTimeToEgg += timeSinceLastEgg;
+
+                    GetComponent<SaveGameScript>().SaveGame("Rotation: "
+                        + (GameObject.FindGameObjectWithTag("Rotation").GetComponent<ShowRotationScript>().TotalRotation - SaveRotationToEgg));
+                    SaveRotationToEgg += (GameObject.FindGameObjectWithTag("Rotation").GetComponent<ShowRotationScript>().TotalRotation - SaveRotationToEgg);
+                    GetComponent<SaveGameScript>().SaveGame("Distanz zu Ei: " + hit.distance);
+                    // now add ideal angle, maybe it will be useful 
+                    float idealAngle = Vector3.Angle(transform.TransformDirection(Vector3.forward), SaveVectorToEgg);
+                    GetComponent<SaveGameScript>().SaveGame("Idealrotation: " + idealAngle);
+                    SaveVectorToEgg = transform.TransformDirection(Vector3.forward);
+
                     Destroy(hit.transform.gameObject, 1);
                     if (EggCounter % 3 == 0 && EggCounter != 9)
                     {
