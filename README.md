@@ -1,7 +1,7 @@
 # Finding Easter Eggs
 "Finding Easter Eggs" is a university project developed during my Human-Computer Interaction class as part of my Master's program. The project explored two different techniques for helping users orient themselves in a virtual reality (VR) space to find invisible Easter eggs. The experiment aimed to compare proximity-based feedback with directional guidance to determine which method helps users more effectively navigate VR environments.
 
-You can watch the final prototype in action on YouTube:  
+You can watch the final prototype on YouTube:  
 [Finding Easter Eggs - Final Prototype](https://www.youtube.com/watch?v=15HLDWJviS8)
 
 ## Experiment Overview
