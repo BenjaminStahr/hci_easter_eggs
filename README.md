@@ -7,8 +7,9 @@ You can watch the final prototype on YouTube:
 ## Experiment Overview
 The project compared two visual guidance methods for locating invisible Easter eggs in a VR environment:
 
-Colored Reticle: A reticle that changed color from red (far) to green (close) as the user looked towards an Easter egg.
-Arrow Indicator: An arrow guided the user towards an Easter Egg when he was relatively close.
+- Colored Reticle: A reticle that changed color from red (far) to green (close) as the user looked towards an Easter egg.
+- Arrow Indicator: An arrow guided the user towards an Easter Egg when he was relatively close.
+  
 The experiment was conducted in three levels, with users tasked to find three Easter eggs per level. Once all eggs in a level were found, users were teleported to the next level.
 
 ## Participants and Design
@@ -18,7 +19,6 @@ The experiment was conducted in three levels, with users tasked to find three Ea
   - Time to Find an Egg: Logged for each egg for both techniques.
   - Head Rotation (Degrees): The amount of head movement required to locate each egg was recorded.
   - Perceived Usability: After each session, participants rated the usability of each technique using the System Usability Scale (SUS).
-  - 
 ## Results
 The findings indicated clear differences between the two techniques:
 
